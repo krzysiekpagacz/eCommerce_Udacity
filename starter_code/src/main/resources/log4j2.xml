@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+	<Appenders>
+		<Console name="STDOUT" target="SYSTEM_OUT">
+			<PatternLayout
+				pattern="%d{HH:mm:ss.SSS} %-5level - %msg%n" />
+		</Console>
+		<File name="FILEOUT"
+			fileName="/home/krzysiek/java-trainings/Udacity_Part4/FinalProject/eCommerce-Udacity/logs/app.log"
+			append="false">
+			<PatternLayout>
+				<Pattern>%d{HH:mm:ss.SSS} [%t] %-5level - %msg%n</Pattern>
+			</PatternLayout>
+		</File>
+		<SplunkHttp
+                name="SPLUNK"
+                url="https://localhost:8088"
+                token="8b612fcc-4ce0-4545-916e-b343c0e5a95b"
+                host="localhost"
+                index="e-commerce-api-dev"
+                type="raw"
+                source="http-event-logs"
+                sourcetype="log4j"
+                messageFormat="text"
+                disableCertificateValidation="true">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level - %msg%n"/>
+        </SplunkHttp>
+	</Appenders>
+	<Loggers>
+		<Root level="info">
+			<AppenderRef ref="FILEOUT" level="debug" />
+			<AppenderRef ref="STDOUT" level="info" />
+			<AppenderRef ref="SPLUNK"/>
+		</Root>
+	</Loggers>
+</Configuration>
