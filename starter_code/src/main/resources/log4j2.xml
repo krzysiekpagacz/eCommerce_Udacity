@@ -12,25 +12,23 @@
 				<Pattern>%d{HH:mm:ss.SSS} [%t] %-5level - %msg%n</Pattern>
 			</PatternLayout>
 		</File>
-		<SplunkHttp
-                name="SPLUNK"
-                url="https://localhost:8088"
-                token="8b612fcc-4ce0-4545-916e-b343c0e5a95b"
-                host="localhost"
-                index="e-commerce-api-dev"
-                type="raw"
-                source="http-event-logs"
-                sourcetype="log4j"
-                messageFormat="text"
-                disableCertificateValidation="true">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level - %msg%n"/>
-        </SplunkHttp>
+		<SplunkHttp name="SPLUNK"
+			url="https://localhost:8088/services/collector/event"
+			token="482b221d-2d05-4e04-ac3d-822134849fa5" host="localhost"
+			index="ecommerce-app-dev" type="raw" source="http-event-logs"
+			sourcetype="log4j" messageFormat="text"
+			disableCertificateValidation="true">
+			<PatternLayout
+				pattern="%d{HH:mm:ss.SSS} [%t] %-5level - %msg%n" />
+		</SplunkHttp>
 	</Appenders>
 	<Loggers>
 		<Root level="info">
 			<AppenderRef ref="FILEOUT" level="debug" />
 			<AppenderRef ref="STDOUT" level="info" />
-			<AppenderRef ref="SPLUNK"/>
 		</Root>
+		<Logger name="splunk.log4j" level="info">
+			<AppenderRef ref="SPLUNK" />
+		</Logger>
 	</Loggers>
 </Configuration>
